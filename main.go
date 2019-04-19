@@ -31,7 +31,7 @@ func main() {
 	}
 
 	dns.HandleFunc(".", handleDNSRequest)
-	nss := dns.Server{Addr: "127.0.0.1:53", Net: "udp"}
+	nss := dns.Server{Addr: "127.0.0.2:53", Net: "udp"}
 	err := nss.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
