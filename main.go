@@ -133,17 +133,16 @@ func doh(remote string, r *dns.Msg) (*dns.Msg, error) {
 }
 
 func handleDNSRequest(w dns.ResponseWriter, r *dns.Msg) {
+	defer w.Close()
 	log.Printf("got question from %s\n", w.RemoteAddr().String())
 
 	if r.Response {
 		log.Print("got response message as request")
-		w.Close()
 		return
 	}
 
 	if len(r.Question) != 1 {
 		log.Printf("got message for %d questions\n", len(r.Question))
-		w.Close()
 		return
 	}
 
@@ -171,6 +170,4 @@ func handleDNSRequest(w dns.ResponseWriter, r *dns.Msg) {
 		w.WriteMsg(res.msg)
 		return
 	}
-
-	w.Close()
 }
